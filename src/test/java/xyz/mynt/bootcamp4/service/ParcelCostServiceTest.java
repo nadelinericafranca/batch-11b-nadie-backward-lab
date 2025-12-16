@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ParcelCostServiceTest {
 
-    ParcelCostService parcelCostService = new ParcelCostServiceImpl();
+    ParcelCostService parcelCostService = new ParcelCostServiceImpl(null);
 
     @Test
     @DisplayName("TC-10 Small parcel")

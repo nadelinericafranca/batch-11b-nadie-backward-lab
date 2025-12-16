@@ -20,12 +20,22 @@ public class ParcelCostRestController {
 
     @GetMapping("/v1")
     public ResponseEntity<?> computeV1(
+            @RequestParam(name = "v", required = false) String voucher,
             @RequestParam("l") double length,
             @RequestParam("w") double width,
             @RequestParam("h") double height) {
 
         try {
-            double cost = parcelCostService.computeCost(length, width, height);
+            double cost;
+            // Without Voucher
+            if (voucher == null) {
+                cost = parcelCostService.computeCost(length, width, height);
+                return ResponseEntity.ok(new Cost(cost));
+            }
+
+            // With voucher
+            cost = parcelCostService.computeCost(length, width, height, voucher);
+
             return ResponseEntity.ok(new Cost(cost));
         } catch (RuntimeException re) {
             return ResponseEntity.badRequest().body(new ErrorMessage(re.getMessage()));
